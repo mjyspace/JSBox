@@ -33,7 +33,8 @@ function error_handler(status_code) {
             title: "鉴权失败",
             message: "您输入的用户名为：\n" + rixcloud_user_name + "\n您输入的密码为：\n"
             + rixcloud_account_password
-            + "\n\n如果输入有误，请清除脚本缓存重新运行；如果无误，请确认您的账号可以正常访问",
+            + "\n\n如果输入有误，请清除脚本缓存重新运行；如果无误，请确认您的账号可以正常访问；此外，已发现有的密码会影响访问 rixCloud " +
+            "API，可以尝试临时修改登陆密码为简单密码，看看是否可以正常运行。",
         })
     } else {
         $ui.alert({
