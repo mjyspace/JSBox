@@ -17,3 +17,8 @@ By JunM
 安装链接：
 
 [链接](https://github.com/mjyspace/JSBox/blob/master/rixCloud%20%E6%B5%81%E9%87%8F%E6%9F%A5%E8%AF%A2/.output/rixCloud%20%E6%B5%81%E9%87%8F%E6%9F%A5%E8%AF%A2.box)
+
+[xTeko链接](https://xteko.com/redir?name=rixCloud%20%E6%B5%81%E9%87%8F%E6%9F%A5%E8%AF%A2&url=https%3A%2F%2Fgithub.com%2Fmjyspace%2FJSBox%2Fblob%2Fmaster%2FrixCloud%2520%25E6%25B5%2581%25E9%2587%258F%25E6%259F%25A5%25E8%25AF%25A2%2F.output%2FrixCloud%2520%25E6%25B5%2581%25E9%2587%258F%25E6%259F%25A5%25E8%25AF%25A2.box)
+
+
+
