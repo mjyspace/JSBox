@@ -232,7 +232,7 @@ function get_user_data() {
                                                                                 $device.taptic(1);
                                                                                 $ui.alert({
                                                                                     title: "提示",
-                                                                                    message: "在通知上按压（3D Toudh）" +
+                                                                                    message: "在通知上按压（3D Touch）" +
                                                                                     "即可查看流量使用情况\n\n" +
                                                                                     "由于 JSBox 本身的原因，" +
                                                                                     "设置好的提醒可能" +
@@ -339,7 +339,7 @@ function get_user_data() {
                                             $device.taptic(1);
                                             $ui.alert({
                                                 title: "提示",
-                                                message: "在通知上按压（3D Toudh）" +
+                                                message: "在通知上按压（3D Touch）" +
                                                 "即可查看流量使用情况\n\n" +
                                                 "由于 JSBox 本身的原因，" +
                                                 "设置好的提醒可能" +
