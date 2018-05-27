@@ -31,24 +31,38 @@ let color_of_download = "#d78965";
 let color_of_upload = "#F6C555";
 let color_of_available = "#7BA23F";
 
+
+function cancel_trigger() {
+    $push.cancel({
+        title: $addin.current.displayName,
+        body: everyday_trigger_content,
+    });
+}
+
+function activate_trigger() {
+    $push.schedule({
+        title: $addin.current.displayName,
+        body: everyday_trigger_content,
+        date: everyday_trigger_time,
+        script: $addin.current.displayName,
+        // height: 300,
+        repeats: true,
+        handler: function (result) {
+            let id = result.id;
+        }
+    });
+}
+
+
 function trigger_persistent() {
     if (everyday_trigger_boolean === true && $app.env !== $env.notification) {
-        $push.cancel({
-            title: $addin.current.displayName,
-            body: everyday_trigger_content,
+
+        cancel_trigger();
+
+        $delay(1, function () {
+            activate_trigger();
         });
 
-        $push.schedule({
-            title: $addin.current.displayName,
-            body: everyday_trigger_content,
-            date: everyday_trigger_time,
-            script: $addin.current.displayName,
-            // height: 300,
-            repeats: true,
-            handler: function (result) {
-                let id = result.id;
-            }
-        });
     }
 }
 
@@ -261,6 +275,7 @@ function get_user_data() {
                                                             }
                                                         )
                                                     } else if (idx === 1) {
+                                                        cancel_trigger();
                                                         everyday_trigger_boolean = false;
                                                         everyday_trigger_time = null;
                                                         $cache.set("user_data", {
@@ -366,6 +381,7 @@ function get_user_data() {
                         }
                     )
                 } else if (idx === 1) {
+                    cancel_trigger();
                     everyday_trigger_boolean = false;
                     everyday_trigger_time = null;
                     $cache.set("user_data", {
