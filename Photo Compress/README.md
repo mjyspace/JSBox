@@ -5,7 +5,7 @@ By [JunM](https://t.me/jun_m)
 并且压缩后的照片会保留原始照片的 EXIF 信息，不会打乱相册的时间线，适合希望在手机上保留原文件又希望节省一些空间的人。<br><br><br>
 
 第三方调用：<br><br>
-调用 [TinyJPG (TinyPNG)](https://tinyjpg.com/) 的 API 进行图片压缩，<br><br>
+调用 [TinyJPG (TinyPNG)](https://tinyjpg.com/) 的 API 进行照片压缩，<br><br>
 调用 [piexifjs 库](https://github.com/hMatoba/piexifjs) 进行照片的 EXIF
 信息的读取和写入。<br><br>
 
@@ -25,4 +25,4 @@ PS:<br><br>
 
 [文件链接](https://github.com/mjyspace/JSBox/blob/master/Photo%20Compress/.output/Photo%20Compress.box?raw=true)
 
-[JSBox 安装链接](https://xteko.com/redir?name=rixCloud%20%E6%B5%81%E9%87%8F%E6%9F%A5%E8%AF%A2&url=https%3A%2F%2Fgithub.com%2Fmjyspace%2FJSBox%2Fblob%2Fmaster%2FrixCloud%2520%25E6%25B5%2581%25E9%2587%258F%25E6%259F%25A5%25E8%25AF%25A2%2F.output%2FrixCloud%2520%25E6%25B5%2581%25E9%2587%258F%25E6%259F%25A5%25E8%25AF%25A2.box)
+[JSBox 安装链接](https://xteko.com/redir?name=Photo%20Compress&url=https%3A%2F%2Fgithub.com%2Fmjyspace%2FJSBox%2Fblob%2Fmaster%2FPhoto%2520Compress%2F.output%2FPhoto%2520Compress.box%3Fraw%3Dtrue&author=JunM)
