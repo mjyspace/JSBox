@@ -17,6 +17,6 @@ PS:<br><br>
 
 安装链接：
 
-[文件链接](https://github.com/mjyspace/JSBox/blob/master/Photo%20Compress/.output/Photo%20Compress.box?raw=true)
+[文件链接](https://github.com/mjyspace/JSBox/blob/master/EXIF%20Modify/.output/EXIF%20Modify.box?raw=true)
 
-[JSBox 安装链接](https://xteko.com/redir?name=Photo%20Compress&url=https%3A%2F%2Fgithub.com%2Fmjyspace%2FJSBox%2Fblob%2Fmaster%2FPhoto%2520Compress%2F.output%2FPhoto%2520Compress.box%3Fraw%3Dtrue&author=JunM)
+[JSBox 安装链接](https://xteko.com/redir?name=EXIF%20Modify&url=https%3A%2F%2Fgithub.com%2Fmjyspace%2FJSBox%2Fblob%2Fmaster%2FEXIF%2520Modify%2F.output%2FEXIF%2520Modify.box%3Fraw%3Dtrue&author=JunM)
