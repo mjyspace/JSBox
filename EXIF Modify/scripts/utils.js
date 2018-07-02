@@ -11,7 +11,6 @@ function tapticTaptic(repeat_times) {
 }
 
 
-
 function stopToast() {
     $ui.toast("", 0.2);
 }

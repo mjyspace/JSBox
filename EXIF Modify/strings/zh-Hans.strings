@@ -18,9 +18,14 @@
 "E" = "东经";
 "W" = "西经";
 "Save & Exit" = "保存并退出";
+"Save & Return" = "保存并返回";
 "Please run in JSBox APP" = "请在 JSBox APP 中运行";
 "Exit" = "退出";
 "Jump to JSBox APP" = "跳转至 JSBox APP";
+"Resolution:" = "分辨率：";
 "Saved successfully." = "保存成功";
+"Modify GPS Info" = "修改 GPS 信息";
+"Tap & Modify" = "点击修改位置";
+"Tap & Add" = "点击添加";
 "Tips" = "提示";
 "This script uses piexifjs library to modify exif of photos and does not support HEIF." = "本脚本使用 piexifjs 库来对 exif 进行操作，所以不支持 HEIF 格式。";
