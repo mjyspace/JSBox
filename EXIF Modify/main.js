@@ -253,7 +253,7 @@ function show_tips() {
 
             $ui.alert({
                 title: $l10n("Tips"),
-                message: $l10n("This script uses piexifjs library to modify exif of photos and does not support HEIF."),
+                message: $l10n("This script uses piexifjs library to modify exif of photos and does not support HEIF, PNG."),
                 actions: [
                     {
                         title: $l10n("OK"),
@@ -913,7 +913,7 @@ if (($app.env !== $env.app)) {
                     $("device_model_input").text = exifObj["0th"]["272"];
                     $("lens_model_input").text = exifObj["Exif"]["42036"];
                     $("resolution_label").text = exifObj["Exif"]["40963"] + " * " + exifObj["Exif"]["40962"];
-                    if(exifObj["Exif"]["40963"] === 1 && exifObj["Exif"]["40962"] ===1){
+                    if (exifObj["Exif"]["40963"] === 1 && exifObj["Exif"]["40962"] === 1) {
                         $("resolution_label").text = "";
                     }
 
@@ -953,5 +953,7 @@ if (($app.env !== $env.app)) {
         })
     })
 }
+
+
 
 
