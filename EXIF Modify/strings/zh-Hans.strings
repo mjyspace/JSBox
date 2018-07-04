@@ -1,4 +1,4 @@
-"OK" = "好的";
+"OK" = "确认";
 "DONE" = "完成";
 "EXIF Modify" = "修改 EXIF";
 "Make" = "设备制造商";
@@ -25,7 +25,13 @@
 "Resolution:" = "分辨率：";
 "Saved successfully." = "保存成功";
 "Modify GPS Info" = "修改 GPS 信息";
+"Incomplete exif data" = "EXIF 信息不完整";
+"Use default data for missing exif info" = "缺失的数据使用默认值代替";
+"Missing exif info will be replaced with default data and you can modify if you want." = "缺失的数据使用默认值代替，你也可以进行修改。";
 "Tap & Modify" = "点击修改位置";
+"Please select jpg files" = "请选择 JPG 格式的图片";
+"This script uses piexifjs library to modify exif and does only support JPG and JPEG." = "由于 Piexifjs 的限制，目前仅支持 JPG 和 JPEG 格式";
+"Time Modify" = "修改拍摄时间";
 "Tap & Add" = "点击添加";
 "Tips" = "提示";
-"This script uses piexifjs library to modify exif of photos and does not support HEIF." = "本脚本使用 piexifjs 库来对 exif 进行操作，所以不支持 HEIF 格式。";
+"This script uses piexifjs library to modify exif of photos and does not support HEIF, PNG." = "本脚本使用 piexifjs 库来对 exif 进行操作，所以不支持 HEIF 和 PNG 格式。";
