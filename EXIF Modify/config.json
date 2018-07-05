@@ -1,9 +1,9 @@
 {
   "info": {
-    "name": "",
+    "name": "EXIF Modify",
     "url": "",
     "version": "1.0.0",
-    "author": "",
+    "author": "JunM",
     "website": "",
     "types": 0
   },
@@ -16,3 +16,4 @@
     "rotateDisabled": false
   }
 }
+

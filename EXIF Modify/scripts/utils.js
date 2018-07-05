@@ -17,8 +17,9 @@ function stopToast() {
 
 
 function stopScript() {
-    tapticTaptic(3);
-    stopToast();
+    // tapticTaptic(3);
+    // stopToast();
+    $device.taptic(2);
     $context.close();
     $app.close();
 }

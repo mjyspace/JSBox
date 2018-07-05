@@ -27,6 +27,8 @@
 "Modify GPS Info" = "修改 GPS 信息";
 "Incomplete exif data" = "EXIF 信息不完整";
 "Use default data for missing exif info" = "缺失的数据使用默认值代替";
+"The format of your choice is: " = "你选择的格式为：";
+"Loading ..." = "载入中 ……";
 "Missing exif info will be replaced with default data and you can modify if you want." = "缺失的数据使用默认值代替，你也可以进行修改。";
 "Tap & Modify" = "点击修改位置";
 "Please select jpg files" = "请选择 JPG 格式的图片";
