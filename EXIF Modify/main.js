@@ -358,7 +358,7 @@ function store_original_exif(original_photo_data) {
 
         // $ui.alert(original_photo_data.info["mimeType"].slice(6,));
 
-        $ui.render(loading_view);
+        // $ui.render(loading_view);
 
         if ((original_photo_data.info["mimeType"].slice(6,) !== "jpeg")
             && (original_photo_data.info["mimeType"].slice(6,)) !== "jpg") {
@@ -1008,7 +1008,7 @@ if (($app.env !== $env.app)) {
                     || resp["status"] === "0") {
                     utils.stopScript();
                 } else {
-                    // $ui.render(loading_view);
+                    $ui.render(loading_view);
 
                     $delay(2, function () {
                         image_data = resp.data;
