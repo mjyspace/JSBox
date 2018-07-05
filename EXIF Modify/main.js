@@ -1002,74 +1002,81 @@ if (($app.env !== $env.app)) {
             multi: false,
             format: "data",
             handler: function (resp) {
-                if (resp["status"] === "false") {
+                if (resp["status"] === "false"
+                    || resp["status"] === 0
+                    || resp["status"] === false
+                    || resp["status"] === "0") {
                     utils.stopScript();
-                }
+                } else {
+                    // $ui.render(loading_view);
 
-                $ui.render(loading_view);
+                    $delay(2, function () {
+                        image_data = resp.data;
+                        // $ui.alert(resp.data.info);
 
-                $delay(2, function () {
-                    image_data = resp.data;
-                    // $ui.alert(resp.data.info);
-
-                    store_original_exif(image_data).then(function () {
-                        let photo_date_string = exifObj["Exif"]["36867"];
-                        photo_date = new Date(
-                            photo_date_string.slice(0, 4),
-                            photo_date_string.slice(5, 7) - 1,
-                            photo_date_string.slice(8, 10),
-                            photo_date_string.slice(11, 13),
-                            photo_date_string.slice(14, 16),
-                            photo_date_string.slice(17, 19),
-                        );
-                        console.log(exifObj["0th"]["271"]);
-                        $ui.render(exifModifyView);
-                        $("device_maker_input").text = exifObj["0th"]["271"];
-                        $("device_model_input").text = exifObj["0th"]["272"];
-                        $("lens_model_input").text = exifObj["Exif"]["42036"];
-                        $("resolution_label").text = exifObj["Exif"]["40963"] + " * " + exifObj["Exif"]["40962"];
-                        if (exifObj["Exif"]["40963"] === 1 && exifObj["Exif"]["40962"] === 1) {
-                            $("resolution_label").text = "";
-                        }
+                        store_original_exif(image_data).then(function () {
+                            let photo_date_string = exifObj["Exif"]["36867"];
+                            photo_date = new Date(
+                                photo_date_string.slice(0, 4),
+                                photo_date_string.slice(5, 7) - 1,
+                                photo_date_string.slice(8, 10),
+                                photo_date_string.slice(11, 13),
+                                photo_date_string.slice(14, 16),
+                                photo_date_string.slice(17, 19),
+                            );
+                            console.log(exifObj["0th"]["271"]);
+                            $ui.render(exifModifyView);
+                            $("device_maker_input").text = exifObj["0th"]["271"];
+                            $("device_model_input").text = exifObj["0th"]["272"];
+                            $("lens_model_input").text = exifObj["Exif"]["42036"];
+                            $("resolution_label").text = exifObj["Exif"]["40963"] + " * " + exifObj["Exif"]["40962"];
+                            if (exifObj["Exif"]["40963"] === 1 && exifObj["Exif"]["40962"] === 1) {
+                                $("resolution_label").text = "";
+                            }
 
 
-                        $("modify_time_button").title = photo_date_string.slice(0, 4)
-                            + "-"
-                            + photo_date_string.slice(5, 7)
-                            + "-"
-                            + photo_date_string.slice(8, 10)
-                            + " "
-                            + photo_date_string.slice(11, 13)
-                            + ":"
-                            + photo_date_string.slice(14, 16)
-                            + ":"
-                            + photo_date_string.slice(17, 19);
+                            $("modify_time_button").title = photo_date_string.slice(0, 4)
+                                + "-"
+                                + photo_date_string.slice(5, 7)
+                                + "-"
+                                + photo_date_string.slice(8, 10)
+                                + " "
+                                + photo_date_string.slice(11, 13)
+                                + ":"
+                                + photo_date_string.slice(14, 16)
+                                + ":"
+                                + photo_date_string.slice(17, 19);
 
-                        $("photo_gps_view").location = {
-                            lat: gps_sexagecimal_to_decimal(
+                            $("photo_gps_view").location = {
+                                lat: gps_sexagecimal_to_decimal(
+                                    exifObj["GPS"]["2"]["0"]["0"],
+                                    exifObj["GPS"]["2"]["1"]["0"],
+                                    exifObj["GPS"]["2"]["2"]["0"]
+                                ),
+                                lng: gps_sexagecimal_to_decimal(
+                                    exifObj["GPS"]["4"]["0"]["0"],
+                                    exifObj["GPS"]["4"]["1"]["0"],
+                                    exifObj["GPS"]["4"]["2"]["0"]
+                                )
+                            };
+
+                            console.log(gps_sexagecimal_to_decimal(
                                 exifObj["GPS"]["2"]["0"]["0"],
                                 exifObj["GPS"]["2"]["1"]["0"],
                                 exifObj["GPS"]["2"]["2"]["0"]
-                            ),
-                            lng: gps_sexagecimal_to_decimal(
-                                exifObj["GPS"]["4"]["0"]["0"],
-                                exifObj["GPS"]["4"]["1"]["0"],
-                                exifObj["GPS"]["4"]["2"]["0"]
-                            )
-                        };
+                            ));
+                        })
 
-                        console.log(gps_sexagecimal_to_decimal(
-                            exifObj["GPS"]["2"]["0"]["0"],
-                            exifObj["GPS"]["2"]["1"]["0"],
-                            exifObj["GPS"]["2"]["2"]["0"]
-                        ));
-                    })
+                    });
+                }
 
-                });
+
             }
         })
     })
 }
+
+
 
 
 
