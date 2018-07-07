@@ -15,6 +15,16 @@ let deviceScreenWidth = $device.info["screen"]["width"];
 
 let input_element_height = deviceScreenHeight / 15 - 10;
 
+let color_jsbox = $color("tint");
+
+let rc_hex = ("00" + ((color_jsbox.runtimeValue().invoke("redComponent") * 255).toString(16))).split(".")[0].slice(-2,);
+let gc_hex = ("00" + ((color_jsbox.runtimeValue().invoke("greenComponent") * 255).toString(16))).split(".")[0].slice(-2,);
+let bc_hex = ("00" + ((color_jsbox.runtimeValue().invoke("blueComponent") * 255).toString(16))).split(".")[0].slice(-2,);
+let color_hex = `#${rc_hex}${gc_hex}${bc_hex}`;
+console.log(color_hex);
+html_template = html_template.replace(/\$\$\$background-color\$\$\$/, color_hex);
+console.log(html_template);
+
 let default_exifObj = {
     "Interop": {},
     "GPS": {
@@ -247,36 +257,102 @@ function gps_sexagecimal_to_decimal(gps_degree, gps_minute, gps_second_100) {
 }
 
 function show_tips() {
-    return new Promise(function (resolve, reject) {
-        user_data = $cache.get("user_data");
-        if (user_data === undefined) {
+    if (($app.env !== $env.app) && ($app.env !== $env.action)) {
+        utils.stopScript();
+    } else if ($app.env === $env.action) {
+        return new Promise(function (resolve, reject) {
+            user_data = $cache.get("user_data");
+
+            let tmp_value_first_launch_jsbox_app = null;
+            try {
+                tmp_value_first_launch_jsbox_app = user_data["first_launch_jsbox_app"];
+            } catch (e) {
+                tmp_value_first_launch_jsbox_app = true;
+            }
 
 
-            $ui.alert({
-                title: $l10n("Tips"),
-                message: $l10n("This script uses piexifjs library to modify exif of photos and does not support HEIF, PNG."),
-                actions: [
-                    {
-                        title: $l10n("OK"),
-                        handler: function () {
-                            $cache.set("user_data", {});
-                            resolve("Whatever");
+            if ((user_data === undefined)
+                || (user_data["first_launch_share_sheet"] === undefined)
+                || ((user_data["first_launch_share_sheet"] === true))) {
+
+
+                $ui.alert({
+                    title: $l10n("Tips"),
+                    message: $l10n("Due to iOS's memory management policy, " +
+                        "running this script in the share menu may crash; " +
+                        "if a crash occurs, please run this script in the JSBox app."),
+                    actions: [
+                        {
+                            title: $l10n("OK"),
+                            handler: function () {
+
+                                $cache.set("user_data", {
+                                    "first_launch_jsbox_app": tmp_value_first_launch_jsbox_app,
+                                    "first_launch_share_sheet": false
+                                });
+
+
+                                resolve("Whatever");
+                            }
+                        },
+                    ]
+                });
+
+
+            } else {
+                resolve("Whatever");
+            }
+        });
+
+    } else if ($app.env === $env.app) {
+        return new Promise(function (resolve, reject) {
+            user_data = $cache.get("user_data");
+            let tmp_value_first_launch_share_sheet = null;
+            try {
+                tmp_value_first_launch_share_sheet = user_data["first_launch_share_sheet"];
+            } catch (e) {
+                tmp_value_first_launch_share_sheet = true;
+            }
+
+            if ((user_data === undefined)
+                || (user_data["first_launch_jsbox_app"] === undefined)
+                || ((user_data["first_launch_jsbox_app"] === true))) {
+
+
+                $ui.alert({
+                    title: $l10n("Tips"),
+                    message: $l10n("This script uses piexifjs " +
+                        "library to modify exif of photos and does not support HEIF, PNG."),
+                    actions: [
+                        {
+                            title: $l10n("OK"),
+                            handler: function () {
+
+                                $cache.set("user_data", {
+                                    "first_launch_jsbox_app": false,
+                                    "first_launch_share_sheet": tmp_value_first_launch_share_sheet
+                                });
+
+
+                                resolve("Whatever");
+                            }
+                        },
+                        {
+                            title: $l10n("Exit"),
+                            handler: function () {
+                                utils.stopScript();
+                            }
                         }
-                    },
-                    {
-                        title: $l10n("Exit"),
-                        handler: function () {
-                            utils.stopScript();
-                        }
-                    }
-                ]
-            });
+                    ]
+                });
 
 
-        } else {
-            resolve("Whatever");
-        }
-    });
+            } else {
+                resolve("Whatever");
+            }
+        });
+
+    }
 }
 
 
@@ -977,14 +1053,15 @@ const loading_view = {
 
 
 // TODO
-if (($app.env !== $env.app)) {
+if (($app.env !== $env.app) && ($app.env !== $env.action)) {
+    let jump_url = "jsbox://run?name=" + $text.URLEncode($addin.current.name);
     $ui.alert({
         title: $l10n("Please run in JSBox APP"),
         actions: [
             {
                 title: "Jump to JSBox APP",
                 handler: function () {
-                    $app.openURL("jsbox://");
+                    $app.openURL(jump_url);
                 }
             },
             {
@@ -996,87 +1073,164 @@ if (($app.env !== $env.app)) {
         ]
     })
 
+} else if ($app.env === $env.action) {
+    let jump_url = "jsbox://run?name=" + $text.URLEncode($addin.current.name) + "&use_clipboard=true";
+    show_tips().then(function () {
+        if ($context.data) {
+            $clipboard.image = $context.data;
+            $app.openURL(jump_url);
+        } else {
+            utils.stopScript();
+        }
+
+    });
 } else if ($app.env === $env.app) {
     show_tips().then(function () {
-        $photo.pick({
-            multi: false,
-            format: "data",
-            handler: function (resp) {
-                if (resp["status"] === "false"
-                    || resp["status"] === 0
-                    || resp["status"] === false
-                    || resp["status"] === "0") {
-                    utils.stopScript();
-                } else {
-                    $ui.render(loading_view);
-
-                    $delay(2, function () {
-                        image_data = resp.data;
-                        // $ui.alert(resp.data.info);
-
-                        store_original_exif(image_data).then(function () {
-                            let photo_date_string = exifObj["Exif"]["36867"];
-                            photo_date = new Date(
-                                photo_date_string.slice(0, 4),
-                                photo_date_string.slice(5, 7) - 1,
-                                photo_date_string.slice(8, 10),
-                                photo_date_string.slice(11, 13),
-                                photo_date_string.slice(14, 16),
-                                photo_date_string.slice(17, 19),
-                            );
-                            console.log(exifObj["0th"]["271"]);
-                            $ui.render(exifModifyView);
-                            $("device_maker_input").text = exifObj["0th"]["271"];
-                            $("device_model_input").text = exifObj["0th"]["272"];
-                            $("lens_model_input").text = exifObj["Exif"]["42036"];
-                            $("resolution_label").text = exifObj["Exif"]["40963"] + " * " + exifObj["Exif"]["40962"];
-                            if (exifObj["Exif"]["40963"] === 1 && exifObj["Exif"]["40962"] === 1) {
-                                $("resolution_label").text = "";
-                            }
+        if ($context.query["use_clipboard"] === "true") {
 
 
-                            $("modify_time_button").title = photo_date_string.slice(0, 4)
-                                + "-"
-                                + photo_date_string.slice(5, 7)
-                                + "-"
-                                + photo_date_string.slice(8, 10)
-                                + " "
-                                + photo_date_string.slice(11, 13)
-                                + ":"
-                                + photo_date_string.slice(14, 16)
-                                + ":"
-                                + photo_date_string.slice(17, 19);
+            $ui.render(loading_view);
 
-                            $("photo_gps_view").location = {
-                                lat: gps_sexagecimal_to_decimal(
+            $delay(0.6, function () {
+                image_data = $clipboard.image;
+                // $ui.alert(resp.data.info);
+
+                store_original_exif(image_data).then(function () {
+                    let photo_date_string = exifObj["Exif"]["36867"];
+                    photo_date = new Date(
+                        photo_date_string.slice(0, 4),
+                        photo_date_string.slice(5, 7) - 1,
+                        photo_date_string.slice(8, 10),
+                        photo_date_string.slice(11, 13),
+                        photo_date_string.slice(14, 16),
+                        photo_date_string.slice(17, 19),
+                    );
+                    console.log(exifObj["0th"]["271"]);
+                    $ui.push(exifModifyView);
+                    $("device_maker_input").text = exifObj["0th"]["271"];
+                    $("device_model_input").text = exifObj["0th"]["272"];
+                    $("lens_model_input").text = exifObj["Exif"]["42036"];
+                    $("resolution_label").text = exifObj["Exif"]["40963"] + " * " + exifObj["Exif"]["40962"];
+                    if (exifObj["Exif"]["40963"] === 1 && exifObj["Exif"]["40962"] === 1) {
+                        $("resolution_label").text = "";
+                    }
+
+
+                    $("modify_time_button").title = photo_date_string.slice(0, 4)
+                        + "-"
+                        + photo_date_string.slice(5, 7)
+                        + "-"
+                        + photo_date_string.slice(8, 10)
+                        + " "
+                        + photo_date_string.slice(11, 13)
+                        + ":"
+                        + photo_date_string.slice(14, 16)
+                        + ":"
+                        + photo_date_string.slice(17, 19);
+
+                    $("photo_gps_view").location = {
+                        lat: gps_sexagecimal_to_decimal(
+                            exifObj["GPS"]["2"]["0"]["0"],
+                            exifObj["GPS"]["2"]["1"]["0"],
+                            exifObj["GPS"]["2"]["2"]["0"]
+                        ),
+                        lng: gps_sexagecimal_to_decimal(
+                            exifObj["GPS"]["4"]["0"]["0"],
+                            exifObj["GPS"]["4"]["1"]["0"],
+                            exifObj["GPS"]["4"]["2"]["0"]
+                        )
+                    };
+
+                    console.log(gps_sexagecimal_to_decimal(
+                        exifObj["GPS"]["2"]["0"]["0"],
+                        exifObj["GPS"]["2"]["1"]["0"],
+                        exifObj["GPS"]["2"]["2"]["0"]
+                    ));
+                })
+
+            });
+
+
+        } else {
+            $photo.pick({
+                multi: false,
+                format: "data",
+                handler: function (resp) {
+                    if (resp["status"] === "false"
+                        || resp["status"] === 0
+                        || resp["status"] === false
+                        || resp["status"] === "0") {
+                        utils.stopScript();
+                    } else {
+                        $ui.render(loading_view);
+
+                        $delay(0.6, function () {
+                            image_data = resp.data;
+                            // $ui.alert(resp.data.info);
+
+                            store_original_exif(image_data).then(function () {
+                                let photo_date_string = exifObj["Exif"]["36867"];
+                                photo_date = new Date(
+                                    photo_date_string.slice(0, 4),
+                                    photo_date_string.slice(5, 7) - 1,
+                                    photo_date_string.slice(8, 10),
+                                    photo_date_string.slice(11, 13),
+                                    photo_date_string.slice(14, 16),
+                                    photo_date_string.slice(17, 19),
+                                );
+                                console.log(exifObj["0th"]["271"]);
+                                $ui.push(exifModifyView);
+                                $("device_maker_input").text = exifObj["0th"]["271"];
+                                $("device_model_input").text = exifObj["0th"]["272"];
+                                $("lens_model_input").text = exifObj["Exif"]["42036"];
+                                $("resolution_label").text = exifObj["Exif"]["40963"] + " * " + exifObj["Exif"]["40962"];
+                                if (exifObj["Exif"]["40963"] === 1 && exifObj["Exif"]["40962"] === 1) {
+                                    $("resolution_label").text = "";
+                                }
+
+
+                                $("modify_time_button").title = photo_date_string.slice(0, 4)
+                                    + "-"
+                                    + photo_date_string.slice(5, 7)
+                                    + "-"
+                                    + photo_date_string.slice(8, 10)
+                                    + " "
+                                    + photo_date_string.slice(11, 13)
+                                    + ":"
+                                    + photo_date_string.slice(14, 16)
+                                    + ":"
+                                    + photo_date_string.slice(17, 19);
+
+                                $("photo_gps_view").location = {
+                                    lat: gps_sexagecimal_to_decimal(
+                                        exifObj["GPS"]["2"]["0"]["0"],
+                                        exifObj["GPS"]["2"]["1"]["0"],
+                                        exifObj["GPS"]["2"]["2"]["0"]
+                                    ),
+                                    lng: gps_sexagecimal_to_decimal(
+                                        exifObj["GPS"]["4"]["0"]["0"],
+                                        exifObj["GPS"]["4"]["1"]["0"],
+                                        exifObj["GPS"]["4"]["2"]["0"]
+                                    )
+                                };
+
+                                console.log(gps_sexagecimal_to_decimal(
                                     exifObj["GPS"]["2"]["0"]["0"],
                                     exifObj["GPS"]["2"]["1"]["0"],
                                     exifObj["GPS"]["2"]["2"]["0"]
-                                ),
-                                lng: gps_sexagecimal_to_decimal(
-                                    exifObj["GPS"]["4"]["0"]["0"],
-                                    exifObj["GPS"]["4"]["1"]["0"],
-                                    exifObj["GPS"]["4"]["2"]["0"]
-                                )
-                            };
+                                ));
+                            })
 
-                            console.log(gps_sexagecimal_to_decimal(
-                                exifObj["GPS"]["2"]["0"]["0"],
-                                exifObj["GPS"]["2"]["1"]["0"],
-                                exifObj["GPS"]["2"]["2"]["0"]
-                            ));
-                        })
+                        });
+                    }
 
-                    });
+
                 }
+            })
 
-
-            }
-        })
+        }
     })
 }
-
-
 
 
 

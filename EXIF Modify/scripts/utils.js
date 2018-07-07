@@ -11,14 +11,9 @@ function tapticTaptic(repeat_times) {
 }
 
 
-function stopToast() {
-    $ui.toast("", 0.2);
-}
-
-
 function stopScript() {
-    // tapticTaptic(3);
-    // stopToast();
+    tapticTaptic(3);
+    $ui.clearToast();
     $device.taptic(2);
     $context.close();
     $app.close();

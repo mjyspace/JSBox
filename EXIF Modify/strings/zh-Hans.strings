@@ -31,6 +31,7 @@
 "Loading ..." = "载入中 ……";
 "Missing exif info will be replaced with default data and you can modify if you want." = "缺失的数据使用默认值代替，你也可以进行修改。";
 "Tap & Modify" = "点击修改位置";
+"Due to iOS's memory management policy, running this script in the share menu may crash; if a crash occurs, please run this script in the JSBox app." = "由于 iOS 的内存管理策略，在分享菜单运行本脚本可能出现闪退；如果发生闪退，请在 JSBox app 中运行此脚本。";
 "Please select jpg files" = "请选择 JPG 格式的图片";
 "This script uses piexifjs library to modify exif and does only support JPG and JPEG." = "由于 Piexifjs 的限制，目前仅支持 JPG 和 JPEG 格式";
 "Time Modify" = "修改拍摄时间";
