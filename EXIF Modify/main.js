@@ -21,8 +21,9 @@ let rc_hex = ("00" + ((color_jsbox.runtimeValue().invoke("redComponent") * 255).
 let gc_hex = ("00" + ((color_jsbox.runtimeValue().invoke("greenComponent") * 255).toString(16))).split(".")[0].slice(-2,);
 let bc_hex = ("00" + ((color_jsbox.runtimeValue().invoke("blueComponent") * 255).toString(16))).split(".")[0].slice(-2,);
 let color_hex = `#${rc_hex}${gc_hex}${bc_hex}`;
+console.log(html_template);
 console.log(color_hex);
-html_template = html_template.replace(/\$\$\$background-color\$\$\$/, color_hex);
+html_template = html_template.replace(/background-color-to-be-replaced/, color_hex);
 console.log(html_template);
 
 let default_exifObj = {
@@ -1106,7 +1107,7 @@ if (($app.env !== $env.app) && ($app.env !== $env.action)) {
                         photo_date_string.slice(17, 19),
                     );
                     console.log(exifObj["0th"]["271"]);
-                    $ui.push(exifModifyView);
+                    $ui.render(exifModifyView);
                     $("device_maker_input").text = exifObj["0th"]["271"];
                     $("device_model_input").text = exifObj["0th"]["272"];
                     $("lens_model_input").text = exifObj["Exif"]["42036"];
@@ -1179,7 +1180,7 @@ if (($app.env !== $env.app) && ($app.env !== $env.action)) {
                                     photo_date_string.slice(17, 19),
                                 );
                                 console.log(exifObj["0th"]["271"]);
-                                $ui.push(exifModifyView);
+                                $ui.render(exifModifyView);
                                 $("device_maker_input").text = exifObj["0th"]["271"];
                                 $("device_model_input").text = exifObj["0th"]["272"];
                                 $("lens_model_input").text = exifObj["Exif"]["42036"];

@@ -11,13 +11,15 @@
             margin: 0;
             padding: 0;
         }
+
         body {
             display: flex;
             justify-content: center;
             align-items: center;
             /*background-color: #4684ee;*/
-            background-color: $$$background-color$$$;
+            background-color: background-color-to-be-replaced;
         }
+
         .loader {
             color: #fff;
             font-family: Consolas, Menlo, Monaco, monospace;
@@ -25,15 +27,18 @@
             font-size: 30vh;
             opacity: 0.8;
         }
+
         .loader span {
             display: inline-block;
             -webkit-animation: pulse 0.4s alternate infinite ease-in-out;
             animation: pulse 0.4s alternate infinite ease-in-out;
         }
+
         .loader span:nth-child(odd) {
             -webkit-animation-delay: 0.4s;
             animation-delay: 0.4s;
         }
+
         @-webkit-keyframes pulse {
             to {
                 -webkit-transform: scale(0.8);
@@ -41,6 +46,7 @@
                 opacity: 0.5;
             }
         }
+
         @keyframes pulse {
             to {
                 -webkit-transform: scale(0.8);
@@ -48,7 +54,7 @@
                 opacity: 0.5;
             }
         }
-</style>
+    </style>
 </head>
 <body>
 
