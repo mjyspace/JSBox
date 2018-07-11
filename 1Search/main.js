@@ -71,7 +71,8 @@ const mainView = {
             },
             events: {
                 changed: function (sender) {
-                    $("search_result_web_view").url = search_engines[$("search_engine_selection_menu").index]["search_engine_url"].replace(/%s/, search_content);
+                    $("search_result_web_view").url = search_engines[$("search_engine_selection_menu").index]
+                        ["search_engine_url"].replace(/%s/, $text.URLEncode(search_content));
                 }
             }
         },
@@ -79,7 +80,7 @@ const mainView = {
             type: "web",
             props: {
                 id: "search_result_web_view",
-                url: search_engines[0]["search_engine_url"].replace(/%s/, search_content),
+                url: search_engines[0]["search_engine_url"].replace(/%s/, $text.URLEncode(search_content)),
                 script: function () {
                 }
             },
@@ -100,7 +101,7 @@ if (($app.env !== $env.app) && ($app.env !== $env.action)) {
         title: $l10n("Please run in JSBox APP"),
         actions: [
             {
-                title: "Jump to JSBox APP", 
+                title: "Jump to JSBox APP",
                 handler: function () {
                     $app.openURL(jump_url);
                 }
@@ -115,9 +116,10 @@ if (($app.env !== $env.app) && ($app.env !== $env.action)) {
     })
 
 } else if ($app.env === $env.action) {
-    if($context.text !== ""){
+    if ($context.text !== "") {
         search_content = $context.text;
         $ui.render(mainView);
+        $("search_result_web_view").url = search_engines[0]["search_engine_url"].replace(/%s/, $text.URLEncode(search_content));
     }
 } else if ($app.env === $env.app) {
 
@@ -127,15 +129,15 @@ if (($app.env !== $env.app) && ($app.env !== $env.action)) {
             if (idx === 0) {
                 search_content = $clipboard.text;
                 $ui.render(mainView);
-                $("search_result_web_view").url = search_engines[0]["search_engine_url"].replace(/%s/, search_content);
+                $("search_result_web_view").url = search_engines[0]["search_engine_url"].replace(/%s/, $text.URLEncode(search_content));
             } else if (idx === 1) {
-                // $ui.alert("dfsad");
                 $input.text({
                     placeholder: $l10n("Please input search content"),
                     handler: function (text) {
                         // $ui.toast(text);
                         search_content = text;
                         $ui.render(mainView);
+                        $("search_result_web_view").url = search_engines[0]["search_engine_url"].replace(/%s/, $text.URLEncode(search_content));
                     }
                 })
 
@@ -145,7 +147,7 @@ if (($app.env !== $env.app) && ($app.env !== $env.action)) {
         //     utils.stopScript();
         // }
     });
-
-
 }
+
+
 

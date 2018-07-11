@@ -1,6 +1,6 @@
 {
   "info": {
-    "name": "1Search",
+    "name": "EXIF Modify",
     "url": "",
     "version": "1.0.0",
     "author": "JunM",
@@ -12,7 +12,7 @@
     "minOSVer": "10.0.0",
     "idleTimerDisabled": false,
     "autoKeyboardEnabled": false,
-    "keyboardToolbarEnabled": true,
+    "keyboardToolbarEnabled": false,
     "rotateDisabled": false
   }
 }
