@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /*background-color: #4684ee;*/
+            background-color: background-color-to-be-replaced;
+        }
+
+        .loader {
+            color: #fff;
+            font-family: Consolas, Menlo, Monaco, monospace;
+            font-weight: bold;
+            font-size: 30vh;
+            opacity: 0.8;
+        }
+
+        .loader span {
+            display: inline-block;
+            -webkit-animation: pulse 0.4s alternate infinite ease-in-out;
+            animation: pulse 0.4s alternate infinite ease-in-out;
+        }
+
+        .loader span:nth-child(odd) {
+            -webkit-animation-delay: 0.4s;
+            animation-delay: 0.4s;
+        }
+
+        @-webkit-keyframes pulse {
+            to {
+                -webkit-transform: scale(0.8);
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+        }
+
+        @keyframes pulse {
+            to {
+                -webkit-transform: scale(0.8);
+                transform: scale(0.8);
+                opacity: 0.5;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="loader">
+    <span>{</span><span>}</span>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+{
+  "info": {
+    "name": "1Search",
+    "url": "",
+    "version": "1.0.0",
+    "author": "JunM",
+    "website": "",
+    "types": 0
+  },
+  "settings": {
+    "minSDKVer": "1.0.0",
+    "minOSVer": "10.0.0",
+    "idleTimerDisabled": false,
+    "autoKeyboardEnabled": false,
+    "keyboardToolbarEnabled": true,
+    "rotateDisabled": false
+  }
+}
+
