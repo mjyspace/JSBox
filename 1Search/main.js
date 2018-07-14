@@ -2,9 +2,10 @@
 // Please refer to Readme.md
 
 let utils = require("scripts/utils");
+let images_base64 = require("scripts/images_base64");
 
-let deviceScreenHeight = $device.info["screen"]["height"];
-let deviceScreenWidth = $device.info["screen"]["width"];
+let device_screen_height = $device.info["screen"]["height"];
+let device_screen_width = $device.info["screen"]["width"];
 
 let search_content = "Test";
 
@@ -89,7 +90,66 @@ const mainView = {
                 make.left.right.equalTo(0);
                 make.bottom.inset(0);
             },
+            events: {
+                didStart: function (sender, navigation) {
+                    $("return_backward_button").hidden = ($("search_result_web_view")["canGoBack"] !== true);
+                    $("return_forward_button").hidden = ($("search_result_web_view")["canGoForward"] !== true);
+                },
+                didFinish: function (sender, navigation) {
+                    $("return_backward_button").hidden = ($("search_result_web_view")["canGoBack"] !== true);
+                    $("return_forward_button").hidden = ($("search_result_web_view")["canGoForward"] !== true);
+                }
+            }
+        },
+        {
+            type: "button",
+            props: {
+                id: "return_backward_button",
+                hidden: true,
+                title: "",//读写	标题
+                src: images_base64.getImagesBase64()["Return-backward"],//读写	图片地址
+                type: 1,//只读	类型
+                contentEdgeInsets: 3,//读写	内容边距
+                titleEdgeInsets: 3,//读写	标题边距
+                imageEdgeInsets: 3,//读写	图片边距
+                alpha: 0.8,
+            },
+            layout: function (make, view) {
+                make.top.equalTo(device_screen_height * 0.72);
+                make.left.equalTo(device_screen_width * 0.1);
+                make.width.height.equalTo(device_screen_width * 0.1233);
+            },
+            events: {
+                tapped: function (sender) {
+                    $("search_result_web_view").goBack();
+                }
+            }
+        },
+        {
+            type: "button",
+            props: {
+                id: "return_forward_button",
+                title: "string",//读写	标题
+                hidden: true,
+                src: images_base64.getImagesBase64()["Return-forward"],//读写	图片地址
+                type: 1,//只读	类型
+                contentEdgeInsets: 3,//读写	内容边距
+                titleEdgeInsets: 3,//读写	标题边距
+                imageEdgeInsets: 3,//读写	图片边距
+                alpha: 0.99,
+            },
+            layout: function (make, view) {
+                make.top.equalTo(device_screen_height * 0.72);
+                make.left.equalTo(device_screen_width * 0.3);
+                make.width.height.equalTo(device_screen_width * 0.1233);
+            },
+            events: {
+                tapped: function (sender) {
+                    $("search_result_web_view").goForward();
+                }
+            }
         }
+
     ]
 };
 
@@ -138,16 +198,17 @@ if (($app.env !== $env.app) && ($app.env !== $env.action)) {
                         search_content = text;
                         $ui.render(mainView);
                         $("search_result_web_view").url = search_engines[0]["search_engine_url"].replace(/%s/, $text.URLEncode(search_content));
+                        $delay(5, function () {
+                            $ui.alert($("search_result_web_view").url);
+                        })
                     }
                 })
 
             }
         },
-        // finished: function (cancelled) {
-        //     utils.stopScript();
-        // }
     });
 }
+
 
 
 
