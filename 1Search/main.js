@@ -36,7 +36,7 @@ let search_engines = [
     },
     {
         "search_engine_name": $l10n("Bing Dict"),
-        "search_engine_url": "https://cn.bing.com/dict/search?q=Test"
+        "search_engine_url": "https://cn.bing.com/dict/search?q=%s"
     },
     {
         "search_engine_name": $l10n("Taobao"),
