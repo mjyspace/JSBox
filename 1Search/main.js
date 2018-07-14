@@ -198,9 +198,6 @@ if (($app.env !== $env.app) && ($app.env !== $env.action)) {
                         search_content = text;
                         $ui.render(mainView);
                         $("search_result_web_view").url = search_engines[0]["search_engine_url"].replace(/%s/, $text.URLEncode(search_content));
-                        $delay(5, function () {
-                            $ui.alert($("search_result_web_view").url);
-                        })
                     }
                 })
 
@@ -208,7 +205,5 @@ if (($app.env !== $env.app) && ($app.env !== $env.action)) {
         },
     });
 }
-
-
 
 
